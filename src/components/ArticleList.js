@@ -41,7 +41,8 @@ export class ArticleList extends Component {
 
         <ul className="articleList">
           {this.state.articles.map((article, i) => {
-            return <li value={i} key={uuid.v4()}>{article.title}</li>
+            return <li value={i} key={uuid.v4()}><button>{article.title}</button></li>
+            // onClick={this.updateStateClick} 
 
 
 
