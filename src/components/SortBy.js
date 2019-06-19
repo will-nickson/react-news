@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export class SortBy extends Component {
   state = {
-    input: ""
+    input: 'bbc'
   };
   render() {
     // console.log(this.props);
@@ -25,6 +25,11 @@ export class SortBy extends Component {
   updateStateInput = event => {
     this.setState({ input: event.target.value });
   };
+
+  componentDidMount(prevProps, prevState) {
+    this.props.submitSortBy(this.state.input);
+  }
+
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.input !== this.state.input) {

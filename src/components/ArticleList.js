@@ -3,18 +3,21 @@ import axios from "axios";
 import uuid from "uuid";
 import apiKey from "../config";
 import SortBy from "./SortBy";
+import Article from './Article';
+import { Link, Router } from "@reach/router";
 
 export class ArticleList extends Component {
   state = {
     articles: [],
-    sortBy: ""
+    sortBy: "",
+    currentIndex: 0
   };
 
   componentDidMount() {
     axios
       .get(
         `https://newsapi.org/v2/everything?q=${
-          this.submitSortBy
+        this.submitSortBy
         }&apiKey=${apiKey}`
       )
       .then(response => this.setState({ articles: response.data.articles }));
@@ -32,14 +35,27 @@ export class ArticleList extends Component {
     return (
       <div>
         <SortBy submitSortBy={this.submitSortBy} />
+        {this.state.articles[0] &&
+          <Article article={this.state.articles[this.state.currentIndex]} />
+        }
+
         <ul className="articleList">
-          {this.state.articles.map(article => (
-            <li key={uuid.v4()}>{article.title}</li>
-          ))}{" "}
+          {this.state.articles.map((article, i) => {
+            return <li value={i} key={uuid.v4()}>{article.title}</li>
+
+
+
+
+
+          })
+          }
         </ul>
-        <Article />
+
       </div>
     );
+  }
+  updateStateClick = (event) => {
+    this.setState({ currentIndex: event.target.value })
   }
 }
 
